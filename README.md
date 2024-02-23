@@ -18,7 +18,7 @@ python3 main.py
 
 # License
 
-Licensed under AGPL-v3, see LICENSE for more info
+Licensed under GNU GPL v3, see LICENSE for more info
 
 # Copyrights
 
