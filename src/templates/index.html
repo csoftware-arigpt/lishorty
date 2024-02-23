@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>lishorty</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f5f5;
+    }
+    .container {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>lishorty</h1>
+    <form id="linkForm" onsubmit="event.preventDefault(); generateShortLink();">
+      <div class="form-group">
+        <label for="link">Link:</label>
+        <input type="text" class="form-control" id="link" placeholder="example.com">
+      </div>
+      <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+    <div id="shortLink" style="display: none;">
+      <h3>Short Link:</h3>
+      <a id="generatedLink" href="" target="_blank"></a>
+    </div>
+
+    <script>
+      function generateShortLink() {
+        var longLink = document.getElementById("link").value;
+        if (!/^http(s)?:\/\//.test(longLink)) {
+          longLink = 'https://' + longLink;
+        }
+        var domain = window.location.origin;
+        fetch('/generate-short-link', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ longLink: longLink, domain: domain })
+        })
+        .then(response => response.json())
+        .then(data => {
+          var generatedLink = data.shortLink;
+          var linkElement = document.getElementById("generatedLink");
+          linkElement.textContent = generatedLink;
+          linkElement.href = generatedLink;
+          document.getElementById("shortLink").style.display = "block";
+          var tempInput = document.createElement("input");
+          tempInput.value = generatedLink;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand("copy");
+          document.body.removeChild(tempInput);
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    </script>
+  </div>
+</body>
+</html>
