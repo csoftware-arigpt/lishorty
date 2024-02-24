@@ -51,4 +51,4 @@ def redirect_to_long_link(code):
         return redirect('/')
 
 if __name__ == '__main__':
-    app.run()
+    app.run("0.0.0.0")
