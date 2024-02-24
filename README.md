@@ -22,4 +22,4 @@ Licensed under GNU GPL v3, see LICENSE for more info
 
 # Copyrights
 
-@csoftware
+@csoftware - 2024
